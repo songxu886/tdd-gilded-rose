@@ -32,10 +32,33 @@ public class GildedRoseTest {
         assertEquals(1, items.get(0).getQuality());
         assertEquals(1, items.get(0).getSellIn());
 
-        assertEquals(0, items.get(1).getQuality());
-        assertEquals(1, items.get(1).getSellIn());
+        assertEquals(-1, items.get(1).getQuality());
+        assertEquals(2, items.get(1).getSellIn());
 
         assertEquals(51, items.get(2).getQuality());
-        assertEquals(1, items.get(2).getSellIn());
+        assertEquals(2, items.get(2).getSellIn());
+    }
+
+    @Test
+    public void testUpdateQualityOfSulfuras() {
+        // Given
+        List<Product> items = Stream
+                .of(new Product("Sulfuras", 2, 0),
+                        new Product("Sulfuras", 2, -1),
+                        new Product("Sulfuras", 2, 51))
+                .collect(Collectors.toList());
+
+        // When
+        gildedRose.updateQuality(items);
+
+        // Then
+        assertEquals(0, items.get(0).getQuality());
+        assertEquals(2, items.get(0).getSellIn());
+
+        assertEquals(-1, items.get(1).getQuality());
+        assertEquals(2, items.get(1).getSellIn());
+
+        assertEquals(51, items.get(2).getQuality());
+        assertEquals(2, items.get(2).getSellIn());
     }
 }
